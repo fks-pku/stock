@@ -104,9 +104,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <select id="filterStock" class="w-full px-4 py-2.5 rounded-xl border border-apple-gray-300 bg-white text-sm focus:outline-none focus:border-apple-blue focus:ring-1 focus:ring-apple-blue transition-apple">
                     <option value="">全部股票</option>
-                    <option value="600000">600000 - 浦发银行</option>
-                    <option value="000858">000858 - 五粮液</option>
-                    <option value="601318">601318 - 中国平安</option>
+                    <!-- 股票选项会从JSON数据动态生成 -->
                 </select>
                 <input type="date" id="filterDate" class="w-full px-4 py-2.5 rounded-xl border border-apple-gray-300 bg-white text-sm focus:outline-none focus:border-apple-blue focus:ring-1 focus:ring-apple-blue transition-apple" placeholder="选择日期">
             </div>
@@ -114,174 +112,17 @@
 
         <!-- 股票信息容器：按股票分组，每组4个Banner -->
         <div id="stockInfoContainer" class="space-y-10">
-            <!-- 空状态（默认隐藏） -->
+            <!-- 空状态/加载失败状态 -->
             <div id="emptyTip" class="bg-white rounded-2xl shadow-apple p-10 text-center border border-apple-gray-200 hidden">
                 <i class="fa-solid fa-file-invoice text-5xl text-apple-gray-200 mb-4"></i>
-                <p class="text-apple-gray-500">暂无股票信息</p>
+                <p class="text-apple-gray-500" id="emptyTipText">暂无股票信息</p>
                 <p class="text-apple-gray-400 text-sm mt-2">添加第一条记录开始你的股票笔记</p>
             </div>
-
-            <!-- 浦发银行分组 -->
-            <div class="stock-group" data-stock-code="600000">
-                <div class="flex items-center gap-3 mb-6">
-                    <h3 class="text-xl font-medium">600000 - 浦发银行</h3>
-                    <span class="text-xs text-apple-gray-500" id="spdUpdateTime">更新于 2026年1月28日</span>
-                </div>
-                
-                <!-- 4类信息Banner：Apple风格网格布局 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                    <!-- 财经新闻Banner -->
-                    <div class="banner-hover bg-apple-news rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-newspaper text-blue-600"></i>
-                            <h4 class="font-medium">财经新闻</h4>
-                        </div>
-                        <div id="spdNewsList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染财经新闻列表 -->
-                        </div>
-                    </div>
-
-                    <!-- 分析报告观点Banner -->
-                    <div class="banner-hover bg-apple-report rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-file-chart-line text-purple-600"></i>
-                            <h4 class="font-medium">分析报告观点</h4>
-                        </div>
-                        <div id="spdReportList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染研报列表 -->
-                        </div>
-                    </div>
-
-                    <!-- 小道消息Banner -->
-                    <div class="banner-hover bg-apple-rumor rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-user-secret text-orange-600"></i>
-                            <h4 class="font-medium">小道消息</h4>
-                        </div>
-                        <div id="spdRumorList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染小道消息列表 -->
-                        </div>
-                    </div>
-
-                    <!-- 技术指标分析Banner -->
-                    <div class="banner-hover bg-apple-tech rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-chart-simple text-green-600"></i>
-                            <h4 class="font-medium">技术指标分析</h4>
-                        </div>
-                        <div id="spdTechList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染技术分析列表 -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 五粮液分组 -->
-            <div class="stock-group" data-stock-code="000858">
-                <div class="flex items-center gap-3 mb-6">
-                    <h3 class="text-xl font-medium">000858 - 五粮液</h3>
-                    <span class="text-xs text-apple-gray-500" id="wlyUpdateTime">更新于 2026年1月27日</span>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                    <!-- 财经新闻Banner -->
-                    <div class="banner-hover bg-apple-news rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-newspaper text-blue-600"></i>
-                            <h4 class="font-medium">财经新闻</h4>
-                        </div>
-                        <div id="wlyNewsList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染财经新闻列表 -->
-                        </div>
-                    </div>
-
-                    <!-- 分析报告观点Banner -->
-                    <div class="banner-hover bg-apple-report rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-file-chart-line text-purple-600"></i>
-                            <h4 class="font-medium">分析报告观点</h4>
-                        </div>
-                        <div id="wlyReportList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染研报列表 -->
-                        </div>
-                    </div>
-
-                    <!-- 小道消息Banner -->
-                    <div class="banner-hover bg-apple-rumor rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-user-secret text-orange-600"></i>
-                            <h4 class="font-medium">小道消息</h4>
-                        </div>
-                        <div id="wlyRumorList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染小道消息列表 -->
-                        </div>
-                    </div>
-
-                    <!-- 技术指标分析Banner -->
-                    <div class="banner-hover bg-apple-tech rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-chart-simple text-green-600"></i>
-                            <h4 class="font-medium">技术指标分析</h4>
-                        </div>
-                        <div id="wlyTechList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染技术分析列表 -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 中国平安分组 -->
-            <div class="stock-group" data-stock-code="601318">
-                <div class="flex items-center gap-3 mb-6">
-                    <h3 class="text-xl font-medium">601318 - 中国平安</h3>
-                    <span class="text-xs text-apple-gray-500" id="pinganUpdateTime">更新于 2026年1月26日</span>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                    <!-- 财经新闻Banner -->
-                    <div class="banner-hover bg-apple-news rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-newspaper text-blue-600"></i>
-                            <h4 class="font-medium">财经新闻</h4>
-                        </div>
-                        <div id="pinganNewsList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染财经新闻列表 -->
-                        </div>
-                    </div>
-
-                    <!-- 分析报告观点Banner -->
-                    <div class="banner-hover bg-apple-report rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-file-chart-line text-purple-600"></i>
-                            <h4 class="font-medium">分析报告观点</h4>
-                        </div>
-                        <div id="pinganReportList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染研报列表 -->
-                        </div>
-                    </div>
-
-                    <!-- 小道消息Banner -->
-                    <div class="banner-hover bg-apple-rumor rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-user-secret text-orange-600"></i>
-                            <h4 class="font-medium">小道消息</h4>
-                        </div>
-                        <div id="pinganRumorList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染小道消息列表 -->
-                        </div>
-                    </div>
-
-                    <!-- 技术指标分析Banner -->
-                    <div class="banner-hover bg-apple-tech rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-chart-simple text-green-600"></i>
-                            <h4 class="font-medium">技术指标分析</h4>
-                        </div>
-                        <div id="pinganTechList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <!-- 动态渲染技术分析列表 -->
-                        </div>
-                    </div>
-                </div>
+            
+            <!-- 加载中状态 -->
+            <div id="loadingTip" class="bg-white rounded-2xl shadow-apple p-10 text-center border border-apple-gray-200">
+                <i class="fa-solid fa-spinner fa-spin text-5xl text-apple-gray-200 mb-4"></i>
+                <p class="text-apple-gray-500">正在加载股票数据...</p>
             </div>
         </div>
     </main>
@@ -294,170 +135,12 @@
     </footer>
 
     <script>
-        // --------------- 模拟历史数据（包含多条信息，格式：日期+文本+来源+链接）---------------
-        const stockData = {
-            '600000': { // 浦发银行
-                name: '浦发银行',
-                updateTime: '2026-01-28',
-                news: [ // 财经新闻
-                    {
-                        date: '2026-01-28',
-                        content: '浦发银行2025年四季度财报发布，营收同比增长3.2%，净利润同比增长2.8%，不良贷款率降至1.15%，符合市场预期。',
-                        source: '浦发银行官网',
-                        link: 'https://www.spdb.com.cn'
-                    },
-                    {
-                        date: '2026-01-20',
-                        content: '浦发银行与阿里云达成战略合作，共同推进金融云建设，预计三年内投入20亿元。',
-                        source: '财新网',
-                        link: 'https://www.caixin.com'
-                    },
-                    {
-                        date: '2026-01-10',
-                        content: '浦发银行下调个人经营贷利率，最低可至3.65%，进一步支持小微企业发展。',
-                        source: '上海证券报',
-                        link: ''
-                    }
-                ],
-                report: [ // 分析报告观点
-                    {
-                        date: '2026-01-27',
-                        content: '中金公司研报：浦发银行资产质量持续改善，净息差企稳回升，给予“跑赢行业”评级，目标价8.5元。',
-                        source: '中金公司',
-                        link: 'https://www.cicc.com'
-                    },
-                    {
-                        date: '2026-01-15',
-                        content: '中信建投：浦发银行零售业务转型成效显著，信用卡交易额同比增长12%，维持“买入”评级。',
-                        source: '中信建投证券',
-                        link: ''
-                    }
-                ],
-                rumor: [ // 小道消息
-                    {
-                        date: '2026-01-26',
-                        content: '网传浦发银行拟与地方国资合作设立科创金融子公司，重点支持长三角科技企业，具体方案尚未落地。',
-                        source: '市场传言',
-                        link: ''
-                    },
-                    {
-                        date: '2026-01-22',
-                        content: '有消息称浦发银行正在洽谈收购某城商行股权，拓展长三角区域布局。',
-                        source: '匿名消息源',
-                        link: ''
-                    }
-                ],
-                tech: [ // 技术指标分析
-                    {
-                        date: '2026-01-25',
-                        content: '日线级别MACD金叉形成，成交量温和放大，短期支撑位7.2元，压力位7.8元，建议持仓观望。',
-                        source: '同花顺财经',
-                        link: 'https://www.10jqka.com.cn'
-                    },
-                    {
-                        date: '2026-01-20',
-                        content: '周线级别KDJ指标低位金叉，布林带收口，预计短期震荡上行，第一目标位7.5元。',
-                        source: '东方财富网',
-                        link: 'https://www.eastmoney.com'
-                    },
-                    {
-                        date: '2026-01-15',
-                        content: '60分钟图显示股价突破下降趋势线，成交量配合，短期有望挑战前期高点7.6元。',
-                        source: '技术分析专栏',
-                        link: ''
-                    }
-                ]
-            },
-            '000858': { // 五粮液
-                name: '五粮液',
-                updateTime: '2026-01-27',
-                news: [
-                    {
-                        date: '2026-01-27',
-                        content: '五粮液公布春节动销数据，核心产品批价稳定在960元以上，节前备货完成率超90%，同比增长15%。',
-                        source: '五粮液官网',
-                        link: 'https://www.wuliangye.com.cn'
-                    },
-                    {
-                        date: '2026-01-20',
-                        content: '五粮液入选2025年度中国品牌价值500强，品牌价值同比增长8%。',
-                        source: '新华社',
-                        link: ''
-                    }
-                ],
-                report: [
-                    {
-                        date: '2026-01-26',
-                        content: '中信证券上调五粮液2026年盈利预测至280亿元，维持“买入”评级，目标价230元，看好高端酒需求复苏。',
-                        source: '中信证券',
-                        link: 'https://www.cs.ecitic.com'
-                    }
-                ],
-                rumor: [
-                    {
-                        date: '2026-01-25',
-                        content: '市场传言五粮液将推出千元价位新品，定位次高端市场，填补800-1000元价格带空白，预计3月发布。',
-                        source: '酒业家',
-                        link: ''
-                    }
-                ],
-                tech: [
-                    {
-                        date: '2026-01-24',
-                        content: '周线级别站稳200元整数关口，RSI指标处于55中性区间，量价配合良好，短期有望挑战220元压力位。',
-                        source: '雪球',
-                        link: 'https://xueqiu.com'
-                    },
-                    {
-                        date: '2026-01-20',
-                        content: '日线级别均线多头排列，MACD红柱放大，短期支撑位195元，可继续持有。',
-                        source: '新浪财经',
-                        link: ''
-                    }
-                ]
-            },
-            '601318': { // 中国平安
-                name: '中国平安',
-                updateTime: '2026-01-26',
-                news: [
-                    {
-                        date: '2026-01-26',
-                        content: '中国平安推出新版重疾险产品，覆盖120种重疾+40种轻症，保费较旧版下调5%-8%，市场反馈积极。',
-                        source: '中国平安官网',
-                        link: 'https://www.pingan.com'
-                    }
-                ],
-                report: [
-                    {
-                        date: '2026-01-25',
-                        content: '华泰证券：平安寿险改革成效显现，新业务价值环比改善，维持“增持”评级，目标价55元。',
-                        source: '华泰证券',
-                        link: ''
-                    }
-                ],
-                rumor: [
-                    {
-                        date: '2026-01-24',
-                        content: '网传平安资管拟加大对新能源板块配置，重点布局光伏和储能领域，相关调研已持续1个月。',
-                        source: '财联社',
-                        link: 'https://www.cls.cn'
-                    }
-                ],
-                tech: [
-                    {
-                        date: '2026-01-23',
-                        content: '日线级别跌破50元支撑位，MACD指标死叉向下，成交量萎缩，短期关注48元整数关口支撑力度。',
-                        source: '东方财富证券',
-                        link: ''
-                    },
-                    {
-                        date: '2026-01-20',
-                        content: '周线级别处于下降通道中，RSI指标超卖，预计短期有反弹，但空间有限。',
-                        source: '技术分析博客',
-                        link: ''
-                    }
-                ]
-            }
+        // --------------- 全局变量 ---------------
+        let stockData = {}; // 存储从JSON加载的股票数据
+        const stockIdPrefixMap = { // 股票代码对应DOM ID前缀
+            '600000': 'spd',
+            '000858': 'wly',
+            '601318': 'pingan'
         };
 
         // --------------- DOM元素 ---------------
@@ -465,18 +148,27 @@
         const filterDate = document.getElementById('filterDate');
         const stockInfoContainer = document.getElementById('stockInfoContainer');
         const emptyTip = document.getElementById('emptyTip');
-        const stockGroups = document.querySelectorAll('.stock-group');
+        const loadingTip = document.getElementById('loadingTip');
+        const emptyTipText = document.getElementById('emptyTipText');
 
         // --------------- 工具函数 ---------------
         // 格式化日期（中文）
         const formatDate = (dateStr) => {
+            if (!dateStr) return '';
             const date = new Date(dateStr);
             return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+        };
+
+        // 获取股票ID前缀
+        const getStockIdPrefix = (stockCode) => {
+            return stockIdPrefixMap[stockCode] || `stock_${stockCode}`;
         };
 
         // 渲染单类信息列表
         const renderInfoList = (containerId, infoList, filterDateStr = '') => {
             const container = document.getElementById(containerId);
+            if (!container) return;
+            
             container.innerHTML = '';
 
             // 筛选日期：仅展示筛选日期及之前的信息
@@ -517,30 +209,108 @@
             });
         };
 
+        // 渲染单个股票的分组DOM
+        const renderStockGroup = (stockCode) => {
+            const stock = stockData[stockCode];
+            if (!stock) return;
+
+            // 创建股票分组容器
+            const stockGroup = document.createElement('div');
+            stockGroup.className = 'stock-group';
+            stockGroup.dataset.stockCode = stockCode;
+            stockGroup.id = `stockGroup_${stockCode}`;
+
+            // 构建股票分组HTML
+            stockGroup.innerHTML = `
+                <div class="flex items-center gap-3 mb-6">
+                    <h3 class="text-xl font-medium">${stockCode} - ${stock.name}</h3>
+                    <span class="text-xs text-apple-gray-500" id="${getStockIdPrefix(stockCode)}UpdateTime">更新于 ${formatDate(stock.updateTime)}</span>
+                </div>
+                
+                <!-- 4类信息Banner -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    <!-- 财经新闻Banner -->
+                    <div class="banner-hover bg-apple-news rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
+                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
+                            <i class="fa-solid fa-newspaper text-blue-600"></i>
+                            <h4 class="font-medium">财经新闻</h4>
+                        </div>
+                        <div id="${getStockIdPrefix(stockCode)}NewsList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
+                            <div class="text-center text-apple-gray-400 text-sm py-8">加载中...</div>
+                        </div>
+                    </div>
+
+                    <!-- 分析报告观点Banner -->
+                    <div class="banner-hover bg-apple-report rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
+                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
+                            <i class="fa-solid fa-file-chart-line text-purple-600"></i>
+                            <h4 class="font-medium">分析报告观点</h4>
+                        </div>
+                        <div id="${getStockIdPrefix(stockCode)}ReportList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
+                            <div class="text-center text-apple-gray-400 text-sm py-8">加载中...</div>
+                        </div>
+                    </div>
+
+                    <!-- 小道消息Banner -->
+                    <div class="banner-hover bg-apple-rumor rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
+                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
+                            <i class="fa-solid fa-user-secret text-orange-600"></i>
+                            <h4 class="font-medium">小道消息</h4>
+                        </div>
+                        <div id="${getStockIdPrefix(stockCode)}RumorList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
+                            <div class="text-center text-apple-gray-400 text-sm py-8">加载中...</div>
+                        </div>
+                    </div>
+
+                    <!-- 技术指标分析Banner -->
+                    <div class="banner-hover bg-apple-tech rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
+                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
+                            <i class="fa-solid fa-chart-simple text-green-600"></i>
+                            <h4 class="font-medium">技术指标分析</h4>
+                        </div>
+                        <div id="${getStockIdPrefix(stockCode)}TechList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
+                            <div class="text-center text-apple-gray-400 text-sm py-8">加载中...</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // 添加到容器中
+            stockInfoContainer.appendChild(stockGroup);
+        };
+
+        // 渲染股票筛选下拉框
+        const renderStockSelect = () => {
+            // 清空原有选项（保留"全部股票"）
+            filterStock.innerHTML = '<option value="">全部股票</option>';
+            
+            // 从stockData中生成股票选项
+            Object.keys(stockData).forEach(stockCode => {
+                const stock = stockData[stockCode];
+                const option = document.createElement('option');
+                option.value = stockCode;
+                option.textContent = `${stockCode} - ${stock.name}`;
+                filterStock.appendChild(option);
+            });
+        };
+
         // 渲染指定股票的所有信息
         const renderStockInfo = (stockCode, filterDateStr = '') => {
             if (!stockCode || !stockData[stockCode]) return;
             
             const stock = stockData[stockCode];
             
-            // 渲染更新时间
-            document.getElementById(`${getStockIdPrefix(stockCode)}UpdateTime`).textContent = `更新于 ${formatDate(stock.updateTime)}`;
+            // 更新股票最后更新时间
+            const updateTimeEl = document.getElementById(`${getStockIdPrefix(stockCode)}UpdateTime`);
+            if (updateTimeEl) {
+                updateTimeEl.textContent = `更新于 ${formatDate(stock.updateTime)}`;
+            }
             
             // 渲染4类信息
-            renderInfoList(`${getStockIdPrefix(stockCode)}NewsList`, stock.news, filterDateStr);
-            renderInfoList(`${getStockIdPrefix(stockCode)}ReportList`, stock.report, filterDateStr);
-            renderInfoList(`${getStockIdPrefix(stockCode)}RumorList`, stock.rumor, filterDateStr);
-            renderInfoList(`${getStockIdPrefix(stockCode)}TechList`, stock.tech, filterDateStr);
-        };
-
-        // 获取股票ID前缀（用于拼接DOM ID）
-        const getStockIdPrefix = (stockCode) => {
-            const prefixMap = {
-                '600000': 'spd',
-                '000858': 'wly',
-                '601318': 'pingan'
-            };
-            return prefixMap[stockCode] || '';
+            renderInfoList(`${getStockIdPrefix(stockCode)}NewsList`, stock.news || [], filterDateStr);
+            renderInfoList(`${getStockIdPrefix(stockCode)}ReportList`, stock.report || [], filterDateStr);
+            renderInfoList(`${getStockIdPrefix(stockCode)}RumorList`, stock.rumor || [], filterDateStr);
+            renderInfoList(`${getStockIdPrefix(stockCode)}TechList`, stock.tech || [], filterDateStr);
         };
 
         // 筛选股票和日期
@@ -548,30 +318,63 @@
             const selectedCode = filterStock.value;
             const selectedDate = filterDate.value;
 
-            // 隐藏所有分组
-            stockGroups.forEach(group => group.classList.add('hidden'));
+            // 隐藏所有股票分组
+            document.querySelectorAll('.stock-group').forEach(group => group.classList.add('hidden'));
             emptyTip.classList.add('hidden');
+
+            // 无数据时显示空状态
+            if (Object.keys(stockData).length === 0) {
+                emptyTipText.textContent = '暂无股票数据';
+                emptyTip.classList.remove('hidden');
+                return;
+            }
 
             // 全部股票
             if (!selectedCode) {
                 // 渲染所有股票的信息
-                Object.keys(stockData).forEach(code => {
-                    renderStockInfo(code, selectedDate);
-                    document.querySelector(`.stock-group[data-stock-code="${code}"]`).classList.remove('hidden');
+                Object.keys(stockData).forEach(stockCode => {
+                    const group = document.getElementById(`stockGroup_${stockCode}`);
+                    if (group) group.classList.remove('hidden');
+                    renderStockInfo(stockCode, selectedDate);
                 });
                 return;
             }
 
             // 筛选指定股票
-            const targetGroup = document.querySelector(`.stock-group[data-stock-code="${selectedCode}"]`);
+            const targetGroup = document.getElementById(`stockGroup_${selectedCode}`);
             if (targetGroup) {
-                renderStockInfo(selectedCode, selectedDate);
                 targetGroup.classList.remove('hidden');
+                renderStockInfo(selectedCode, selectedDate);
             } else {
                 // 无匹配股票时显示空状态
+                emptyTipText.textContent = '未找到该股票的信息';
                 emptyTip.classList.remove('hidden');
             }
         };
+
+        // 从JSON文件加载股票数据
+        async function loadStockData() {
+            try {
+                // 加载JSON文件（和HTML同目录）
+                const response = await fetch('./stock-data.json');
+                if (!response.ok) throw new Error('数据加载失败');
+                
+                stockData = await response.json();
+                loadingTip.classList.add('hidden');
+
+                // 初始化渲染
+                renderStockSelect(); // 渲染股票下拉框
+                Object.keys(stockData).forEach(stockCode => renderStockGroup(stockCode)); // 渲染所有股票分组
+                filterStockAndDate(); // 初始筛选（显示全部）
+
+            } catch (error) {
+                console.error('加载股票数据出错:', error);
+                loadingTip.classList.add('hidden');
+                // 显示加载失败状态
+                emptyTipText.textContent = '数据加载失败，请稍后重试';
+                emptyTip.classList.remove('hidden');
+            }
+        }
 
         // --------------- 事件绑定 ---------------
         filterStock.addEventListener('change', filterStockAndDate);
@@ -579,8 +382,8 @@
 
         // --------------- 初始化 ---------------
         window.onload = () => {
-            // 初始渲染所有股票信息
-            filterStockAndDate();
+            // 加载JSON数据并初始化页面
+            loadStockData();
         };
     </script>
 </body>
