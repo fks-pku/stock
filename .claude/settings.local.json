@@ -12,7 +12,13 @@
       "mcp__chrome-devtools__take_screenshot",
       "mcp__chrome-devtools__list_console_messages",
       "mcp__chrome-devtools__take_snapshot",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "WebSearch",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__click",
+      "mcp__chrome-devtools__fill",
+      "mcp__chrome-devtools__press_key",
+      "Bash(start:*)"
     ]
   }
 }

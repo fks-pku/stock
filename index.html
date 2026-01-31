@@ -355,7 +355,7 @@
         async function loadStockData() {
             try {
                 // 加载JSON文件（和HTML同目录）
-                const response = await fetch('/stock-data.json');
+                const response = await fetch('./stock-data.json');
                 if (!response.ok) throw new Error('数据加载失败');
 
                 stockData = await response.json();
@@ -370,7 +370,17 @@
                 console.error('加载股票数据出错:', error);
                 loadingTip.classList.add('hidden');
                 // 显示加载失败状态
-                emptyTipText.textContent = '数据加载失败，请稍后重试';
+                if (error.message.includes('CORS') || error.message.includes('Cross origin requests are only supported for protocol schemes')) {
+                    emptyTipText.textContent = '直接打开本地文件可能会有跨域限制，请通过本地服务器访问';
+                    emptyTip.innerHTML += '<div class="mt-4 text-xs text-left text-apple-gray-600">\n' +
+                        '解决方法：\n' +
+                        '1. 打开命令行，进入当前目录\n' +
+                        '2. 运行：python -m http.server 8000（需要Python环境）\n' +
+                        '3. 在浏览器中访问：http://localhost:8000\n' +
+                        '</div>';
+                } else {
+                    emptyTipText.textContent = '数据加载失败，请稍后重试';
+                }
                 emptyTip.classList.remove('hidden');
             }
         }
