@@ -24,7 +24,6 @@
                                 800: '#3A3A3C',
                                 900: '#1C1C1E',
                             },
-                            // 4类信息专属轻量配色（Apple风格低饱和度）
                             news: '#E8F4FF',
                             report: '#F0E8FF',
                             rumor: '#FFF0E8',
@@ -118,7 +117,7 @@
                 <p class="text-apple-gray-500" id="emptyTipText">暂无股票信息</p>
                 <p class="text-apple-gray-400 text-sm mt-2">添加第一条记录开始你的股票笔记</p>
             </div>
-            
+
             <!-- 加载中状态 -->
             <div id="loadingTip" class="bg-white rounded-2xl shadow-apple p-10 text-center border border-apple-gray-200">
                 <i class="fa-solid fa-spinner fa-spin text-5xl text-apple-gray-200 mb-4"></i>
@@ -168,7 +167,7 @@
         const renderInfoList = (containerId, infoList, filterDateStr = '') => {
             const container = document.getElementById(containerId);
             if (!container) return;
-            
+
             container.innerHTML = '';
 
             // 筛选日期：仅展示筛选日期及之前的信息
@@ -190,7 +189,7 @@
             filteredList.forEach(item => {
                 const infoItem = document.createElement('div');
                 infoItem.className = 'border-b border-apple-gray-200 pb-4 last:border-0 last:pb-0';
-                
+
                 // 构建信息HTML（包含日期、文本、来源、链接）
                 let linkHtml = '';
                 if (item.link) {
@@ -226,31 +225,9 @@
                     <h3 class="text-xl font-medium">${stockCode} - ${stock.name}</h3>
                     <span class="text-xs text-apple-gray-500" id="${getStockIdPrefix(stockCode)}UpdateTime">更新于 ${formatDate(stock.updateTime)}</span>
                 </div>
-                
+
                 <!-- 4类信息Banner -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                    <!-- 财经新闻Banner -->
-                    <div class="banner-hover bg-apple-news rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-newspaper text-blue-600"></i>
-                            <h4 class="font-medium">财经新闻</h4>
-                        </div>
-                        <div id="${getStockIdPrefix(stockCode)}NewsList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <div class="text-center text-apple-gray-400 text-sm py-8">加载中...</div>
-                        </div>
-                    </div>
-
-                    <!-- 分析报告观点Banner -->
-                    <div class="banner-hover bg-apple-report rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
-                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
-                            <i class="fa-solid fa-file-chart-line text-purple-600"></i>
-                            <h4 class="font-medium">分析报告观点</h4>
-                        </div>
-                        <div id="${getStockIdPrefix(stockCode)}ReportList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
-                            <div class="text-center text-apple-gray-400 text-sm py-8">加载中...</div>
-                        </div>
-                    </div>
-
                     <!-- 小道消息Banner -->
                     <div class="banner-hover bg-apple-rumor rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
                         <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
@@ -262,13 +239,35 @@
                         </div>
                     </div>
 
-                    <!-- 技术指标分析Banner -->
+                    <!-- 分析报告Banner -->
+                    <div class="banner-hover bg-apple-report rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
+                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
+                            <i class="fa-solid fa-file-chart-line text-purple-600"></i>
+                            <h4 class="font-medium">分析报告</h4>
+                        </div>
+                        <div id="${getStockIdPrefix(stockCode)}ReportList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
+                            <div class="text-center text-apple-gray-400 text-sm py-8">加载中...</div>
+                        </div>
+                    </div>
+
+                    <!-- 技术信息Banner -->
                     <div class="banner-hover bg-apple-tech rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
                         <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
                             <i class="fa-solid fa-chart-simple text-green-600"></i>
-                            <h4 class="font-medium">技术指标分析</h4>
+                            <h4 class="font-medium">技术信息</h4>
                         </div>
                         <div id="${getStockIdPrefix(stockCode)}TechList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
+                            <div class="text-center text-apple-gray-400 text-sm py-8">加载中...</div>
+                        </div>
+                    </div>
+
+                    <!-- 专业财经点评Banner -->
+                    <div class="banner-hover bg-apple-news rounded-2xl shadow-apple border border-apple-gray-200 h-[350px] flex flex-col">
+                        <div class="flex items-center gap-2 p-5 border-b border-apple-gray-200">
+                            <i class="fa-solid fa-newspaper text-blue-600"></i>
+                            <h4 class="font-medium">专业财经点评</h4>
+                        </div>
+                        <div id="${getStockIdPrefix(stockCode)}NewsList" class="flex-1 p-4 overflow-y-auto scrollbar-apple space-y-4">
                             <div class="text-center text-apple-gray-400 text-sm py-8">加载中...</div>
                         </div>
                     </div>
@@ -283,7 +282,7 @@
         const renderStockSelect = () => {
             // 清空原有选项（保留"全部股票"）
             filterStock.innerHTML = '<option value="">全部股票</option>';
-            
+
             // 从stockData中生成股票选项
             Object.keys(stockData).forEach(stockCode => {
                 const stock = stockData[stockCode];
@@ -297,20 +296,20 @@
         // 渲染指定股票的所有信息
         const renderStockInfo = (stockCode, filterDateStr = '') => {
             if (!stockCode || !stockData[stockCode]) return;
-            
+
             const stock = stockData[stockCode];
-            
+
             // 更新股票最后更新时间
             const updateTimeEl = document.getElementById(`${getStockIdPrefix(stockCode)}UpdateTime`);
             if (updateTimeEl) {
                 updateTimeEl.textContent = `更新于 ${formatDate(stock.updateTime)}`;
             }
-            
+
             // 渲染4类信息
-            renderInfoList(`${getStockIdPrefix(stockCode)}NewsList`, stock.news || [], filterDateStr);
-            renderInfoList(`${getStockIdPrefix(stockCode)}ReportList`, stock.report || [], filterDateStr);
             renderInfoList(`${getStockIdPrefix(stockCode)}RumorList`, stock.rumor || [], filterDateStr);
+            renderInfoList(`${getStockIdPrefix(stockCode)}ReportList`, stock.report || [], filterDateStr);
             renderInfoList(`${getStockIdPrefix(stockCode)}TechList`, stock.tech || [], filterDateStr);
+            renderInfoList(`${getStockIdPrefix(stockCode)}NewsList`, stock.news || [], filterDateStr);
         };
 
         // 筛选股票和日期
@@ -356,9 +355,9 @@
         async function loadStockData() {
             try {
                 // 加载JSON文件（和HTML同目录）
-                const response = await fetch('./stock-data.json');
+                const response = await fetch('/stock-data.json');
                 if (!response.ok) throw new Error('数据加载失败');
-                
+
                 stockData = await response.json();
                 loadingTip.classList.add('hidden');
 
